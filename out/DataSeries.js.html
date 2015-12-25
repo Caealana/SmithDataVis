@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DataSeries.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DataSeries.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * An array of data points, and general information about the set of data points
+ * : title of the data set, what the x value represents, what the y value
+ * represents
+ * @constructror
+ * @returns {DataSeries}
+ */
+function DataSeries(){
+	this.title; //house+typeofenergy+consumption
+	this.xFieldName;
+	this.yFieldName;
+	this.dataPoints = [];//array of points
+
+}
+
+/**
+ * sets the title representing the data series
+ * @param {String} title
+ * @returns {undefined}
+ */
+DataSeries.prototype.setTitle = function(title){
+	this.title = title;
+}
+
+/**
+ * gets the title representing the data series
+ * @returns {type}
+ */
+DataSeries.prototype.getTitle = function(){
+	return this.title;
+}
+
+/**
+ * adds a datapoint to the dataseries
+ * @param {type} dataPoint
+ * @returns {undefined}
+ */
+DataSeries.prototype.addDataPoint = function(dataPoint){
+	this.dataPoints.push(dataPoint);
+}
+
+/**
+ * gets all of the datapoints in the data series
+ * @returns {Array}
+ */
+DataSeries.prototype.getDataPoints = function(){
+	return this.dataPoints;
+}
+
+/**
+ * sets the string representing the x values of the data points
+ * @param {String} name
+ * @returns {undefined}
+ */
+DataSeries.prototype.setXFieldName = function(name){
+	this.xFieldName = name;
+}
+
+/**
+ * gets the label representing the x values of the data points
+ * @returns {String}
+ */
+DataSeries.prototype.getXFieldName = function(){
+	return this.xFieldName;
+}
+
+/**
+ * sets the string representing the y values of the data points
+ * @param {String} name
+ * @returns {undefined}
+ */
+DataSeries.prototype.setYFieldName = function(name){
+	this.yFieldName = name;
+}
+
+/**
+ * gets the string representing the x values of the data points
+ * @returns {String}
+ */
+DataSeries.prototype.getYFieldName = function(){
+	return this.yFieldName;
+}
+
+/**
+ * sets the string representing the name of the meter used to gather the data
+ * of the data series
+ * @param {String} name
+ * @returns {undefined}
+ */
+DataSeries.prototype.setMeterName = function(name){
+	this.meterName = name;
+}
+
+/**
+ * gets the string representing the name of the meter used to gather the data
+ * of the data series
+ * @returns {String}
+ */
+DataSeries.prototype.getMeterName = function(){
+	return this.meterName;
+}
+
+/**
+ * gets the string representing the title of the data series
+ * @returns {String}
+ */
+DataSeries.prototype.getTitle = function(){
+    return this.title;
+}
+
+/**
+ * clears all of the datapoints in the data series
+ * @returns {undefined}
+ */
+DataSeries.prototype.clearDataPoints = function(){
+    this.dataPoints = [];
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Checkboxes.html">Checkboxes</a></li><li><a href="Controller.html">Controller</a></li><li><a href="DataManager.html">DataManager</a></li><li><a href="DataPoint.html">DataPoint</a></li><li><a href="DataPointInfoBox.html">DataPointInfoBox</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Graph.html">Graph</a></li><li><a href="GraphVisual.html">GraphVisual</a></li><li><a href="HitTestableElement.html">HitTestableElement</a></li><li><a href="HorizontalText.html">HorizontalText</a></li><li><a href="Key.html">Key</a></li><li><a href="Line.html">Line</a></li><li><a href="Pointer.html">Pointer</a></li><li><a href="PointerManager.html">PointerManager</a></li><li><a href="Rectangle.constructor.html">constructor</a></li><li><a href="Selector.html">Selector</a></li><li><a href="SelectorManager.html">SelectorManager</a></li><li><a href="Shape.html">Shape</a></li><li><a href="Slider.html">Slider</a></li><li><a href="SmithEnergyController.html">SmithEnergyController</a></li><li><a href="SmithEnergyDataManager.html">SmithEnergyDataManager</a></li><li><a href="SmithEnergyGameLoop.html">SmithEnergyGameLoop</a></li><li><a href="SmithEnergyGraphArea.html">SmithEnergyGraphArea</a></li><li><a href="SmithEnergySelector.html">SmithEnergySelector</a></li><li><a href="SmithEnergySelectorManager.html">SmithEnergySelectorManager</a></li><li><a href="SmithEnergySliderManager.html">SmithEnergySliderManager</a></li><li><a href="Text.html">Text</a></li><li><a href="VerticalText.html">VerticalText</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DataSeries">DataSeries</a></li><li><a href="global.html#GameLoop">GameLoop</a></li><li><a href="global.html#GraphArea">GraphArea</a></li><li><a href="global.html#Point">Point</a></li><li><a href="global.html#SliderManager">SliderManager</a></li><li><a href="global.html#SmithEnergyDataSeries">SmithEnergyDataSeries</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 18 2015 16:02:02 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

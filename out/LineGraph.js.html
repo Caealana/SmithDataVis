@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: LineGraph.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: LineGraph.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>LineGraph.prototype = new Graph();
+LineGraph.constructor = LineGraph;
+function LineGraph(graphArea, canvas){
+    Graph.call(this, graphArea, canvas);
+    this.graphPoints = [];
+}
+
+/**
+ * creates ellipse objects representing the data points of the graph
+ * @returns {undefined}
+ */
+LineGraph.prototype.createEllipses = function(){
+    this.graphHeight = this.graphArea.getGraphHeight();
+    var currentXValue = this.graphArea.getCanvasWidth()/18;
+    console.log(this.dataPoints.length);
+    for(var i = 0; i &lt; this.dataPoints.length; i++){
+        var yValue = this.graphArea.getGraphHeight() - 
+                this.graphArea.getCanvasHeight()/100 -
+                (this.dataPoints[i].getValue()*this.graphArea.getScaleFactor());
+        var position = new Point(currentXValue,
+        yValue);
+        this.graphPoints.push(position);
+        var ellipse = new Ellipse();
+        ellipse.setWidth(7);
+        ellipse.setHeight(7);
+        ellipse.setFillColor(this.color);
+        ellipse.setLineColor(this.color);
+        ellipse.setLineWidth(2);
+        ellipse.setPosition(position);
+        ellipse.setBounds();
+        this.graphElements.push(ellipse);
+        this.graphArea.addHitTestables([ellipse, this.dataPoints[i]]);
+        currentXValue += this.xSpacing;
+    }
+}
+
+/**
+ * creates lines that connect the ellipses to form a line graph
+ * @returns {undefined}
+ */
+LineGraph.prototype.createConnectingLines = function(){
+    for(var i = 0; i &lt; this.graphPoints.length - 1; i++){
+        var line = new Line();
+        line.setPosition(new Point(this.graphPoints[i].getX(),
+        this.graphPoints[i].getY() + 3));
+        line.setP2(new Point(this.graphPoints[i+1].getX(),
+        this.graphPoints[i+1].getY() + 2));
+        line.setLineColor(this.color);
+        line.setLineWidth(1.5);
+        this.graphElements.push(line);
+    }
+}
+
+/**
+ * clears all information held by line graph
+ * @returns {undefined}
+ */
+LineGraph.prototype.clear = function(){
+    this.fillcolor = undefined;
+    this.dataSeries = undefined;
+    this.dataPoints = [];
+    this.xSpacing = undefined;
+    this.scaleFactor = undefined;
+    this.graphArea = undefined;
+    this.graphElements = [];
+    this.canvas = undefined;
+    this.g = undefined;
+    this.graphPoints = [];
+}
+
+/**
+ * clears all graph points
+ * @returns {undefined}
+ */
+LineGraph.prototype.clearGraphPoints = function(){
+    this.graphPoints = [];
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Checkboxes.html">Checkboxes</a></li><li><a href="Controller.html">Controller</a></li><li><a href="DataManager.html">DataManager</a></li><li><a href="DataPoint.html">DataPoint</a></li><li><a href="DataPointInfoBox.html">DataPointInfoBox</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Graph.html">Graph</a></li><li><a href="GraphVisual.html">GraphVisual</a></li><li><a href="HitTestableElement.html">HitTestableElement</a></li><li><a href="HorizontalText.html">HorizontalText</a></li><li><a href="Key.html">Key</a></li><li><a href="Line.html">Line</a></li><li><a href="Pointer.html">Pointer</a></li><li><a href="PointerManager.html">PointerManager</a></li><li><a href="Rectangle.constructor.html">constructor</a></li><li><a href="Selector.html">Selector</a></li><li><a href="SelectorManager.html">SelectorManager</a></li><li><a href="Shape.html">Shape</a></li><li><a href="Slider.html">Slider</a></li><li><a href="SmithEnergyController.html">SmithEnergyController</a></li><li><a href="SmithEnergyDataManager.html">SmithEnergyDataManager</a></li><li><a href="SmithEnergyGameLoop.html">SmithEnergyGameLoop</a></li><li><a href="SmithEnergyGraphArea.html">SmithEnergyGraphArea</a></li><li><a href="SmithEnergySelector.html">SmithEnergySelector</a></li><li><a href="SmithEnergySelectorManager.html">SmithEnergySelectorManager</a></li><li><a href="SmithEnergySliderManager.html">SmithEnergySliderManager</a></li><li><a href="Text.html">Text</a></li><li><a href="VerticalText.html">VerticalText</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DataSeries">DataSeries</a></li><li><a href="global.html#GameLoop">GameLoop</a></li><li><a href="global.html#GraphArea">GraphArea</a></li><li><a href="global.html#Point">Point</a></li><li><a href="global.html#SliderManager">SliderManager</a></li><li><a href="global.html#SmithEnergyDataSeries">SmithEnergyDataSeries</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 18 2015 16:02:02 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

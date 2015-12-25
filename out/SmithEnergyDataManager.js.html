@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SmithEnergyDataManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SmithEnergyDataManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>SmithEnergyDataManager.prototype = new DataManager();
+SmithEnergyDataManager.constructor = SmithEnergyDataManager;
+/**
+ * Data Manager specific to Smith Energy Consumption Data
+ * @extends DataManager
+ * @constructor
+ * @returns {SmithEnergyDataManager}
+ */
+function SmithEnergyDataManager() {
+    DataManager.call(this);
+}
+
+/**
+ * goes through smith energy consumption data json
+ * organizes data into data series by House/building
+ * dataJson[0] = house name
+ * dataJson[1] = type of Energy
+ * dataJson[2] = meterId
+ * dataJson[3] = house - units
+ * dataJson[i>3] -> field 1 = time stamp[date, time]
+ * @returns {undefined}
+ */
+SmithEnergyDataManager.prototype.initialize = function () {
+    var currentDate = undefined;
+    var consumptionSums = [];
+    var counter = 0;
+    for (var i = 0; i &lt; this.data.length; i++) {
+        consumptionSums[i] = 0;
+        var obj = this.data[i];
+        if (i === 0) { //first object contains house names
+            for (var key in obj) {
+                if (key !== "FIELD1") {//skip first field - has type
+                    var newDataSeries =
+                            new SmithEnergyDataSeries();
+                    newDataSeries.setTitle(obj[key]);
+                    newDataSeries.setBuilding(obj[key]);
+                    newDataSeries.setXFieldName
+                            ("Date and Time");
+                    this.dataSeries.push(newDataSeries);
+                }
+            }
+        }
+        else if (i === 1) { //add type of energy to title name
+            var counter = 0;
+            for (var key in obj) {
+                if (counter > 0) {
+                    var newTitle =
+                            this.dataSeries[counter - 1].getTitle()
+                            + " " + obj[key]
+                            + " Consumption";
+                    this.dataSeries[counter - 1]
+                            .setTitle(newTitle);
+                    this.dataSeries[counter - 1].
+                            setEnergyType(obj[key]);
+                }
+                counter += 1;
+            }
+        }
+        else if (i === 2) { //obj 3 contains meter id
+            var counter = 0;
+            for (var key in obj) {
+                if (counter > 0) {
+                    this.dataSeries[counter - 1]
+                            .setMeterName(obj[key]);
+                }
+                counter += 1;
+            }
+        }
+        else if (i === 3) { //obj 4 contains units
+            var counter = 0;
+            for (var key in obj) {
+                if (counter > 0) {
+                    var split = obj[key].split(" ");
+                    //example: ["Chapin", "House", "-", "Electricity", "(kWh)"]
+                    var currentData =
+                            this.dataSeries[counter - 1];
+                    var newTitle =
+                            currentData.getTitle() + " "
+                            + split[4];
+                    currentData.
+                            setUnits(split[4]);
+                    currentData.
+                            setXFieldName("Date And Time");
+                    currentData.
+                            setYFieldName(this.dataSeries[counter - 1]
+                                    .getEnergyType() + " " + split[4]);
+                    currentData.
+                            setMeterName(obj[key]);
+                    currentData.
+                            setTitle(newTitle);
+                }
+                counter += 1;
+            }
+        }
+
+        else if (i > 3) {
+            var counter = 0;
+            var time = obj["FIELD1"];
+            var seperatedTime = time.split(" ");
+            if(seperatedTime[0] != currentDate){
+                for(var k = 0; k &lt; this.dataSeries.length; k++){
+                    var value = Math.round(consumptionSums[k]);
+                    this.dataSeries[k].addDataPoint(new DataPoint(currentDate,
+                    value));
+                    consumptionSums[k] = 0;
+                }
+                currentDate = seperatedTime[0];
+                //consumptionSums = [];
+                //add the datapoints
+            }
+            //data[i].length: # of eles in array
+            for(var j = 0; j &lt; this.dataSeries.length; j++){
+                var value = parseFloat(obj["FIELD" + (j + 2).toString()]);
+                if(i === 4){
+                    this.dataSeries[j].clearDataPoints();
+                }
+                if(isNaN(value) === false){
+                    /*this.dataSeries[j].addDataPoint(new DataPoint(time,
+                    value));*/
+                    consumptionSums[j] = consumptionSums[j] + value;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Checkboxes.html">Checkboxes</a></li><li><a href="Controller.html">Controller</a></li><li><a href="DataManager.html">DataManager</a></li><li><a href="DataPoint.html">DataPoint</a></li><li><a href="DataPointInfoBox.html">DataPointInfoBox</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Graph.html">Graph</a></li><li><a href="GraphVisual.html">GraphVisual</a></li><li><a href="HitTestableElement.html">HitTestableElement</a></li><li><a href="HorizontalText.html">HorizontalText</a></li><li><a href="Key.html">Key</a></li><li><a href="Line.html">Line</a></li><li><a href="Pointer.html">Pointer</a></li><li><a href="PointerManager.html">PointerManager</a></li><li><a href="Rectangle.constructor.html">constructor</a></li><li><a href="Selector.html">Selector</a></li><li><a href="SelectorManager.html">SelectorManager</a></li><li><a href="Shape.html">Shape</a></li><li><a href="Slider.html">Slider</a></li><li><a href="SmithEnergyController.html">SmithEnergyController</a></li><li><a href="SmithEnergyDataManager.html">SmithEnergyDataManager</a></li><li><a href="SmithEnergyGameLoop.html">SmithEnergyGameLoop</a></li><li><a href="SmithEnergyGraphArea.html">SmithEnergyGraphArea</a></li><li><a href="SmithEnergySelector.html">SmithEnergySelector</a></li><li><a href="SmithEnergySelectorManager.html">SmithEnergySelectorManager</a></li><li><a href="SmithEnergySliderManager.html">SmithEnergySliderManager</a></li><li><a href="Text.html">Text</a></li><li><a href="VerticalText.html">VerticalText</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DataSeries">DataSeries</a></li><li><a href="global.html#GameLoop">GameLoop</a></li><li><a href="global.html#GraphArea">GraphArea</a></li><li><a href="global.html#Point">Point</a></li><li><a href="global.html#SliderManager">SliderManager</a></li><li><a href="global.html#SmithEnergyDataSeries">SmithEnergyDataSeries</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 18 2015 16:02:02 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DataPointInfoBox.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DataPointInfoBox.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>DataPointInfoBox.prototype = new GraphVisual();
+DataPointInfoBox.constructor = DataPointInfoBox;
+/**
+ * defines the box that pops up with information about a data point
+ * @constructor
+ * @extends GraphVisual
+ * @param {GraphArea} graphArea
+ * @param {DataPoint} dataPoint
+ * @returns {DataPointInfoBox}
+ */
+function DataPointInfoBox(graphArea, dataPoint){
+    GraphVisual.call(this);
+    this.xValue = dataPoint.getLabel();
+    this.yValue = dataPoint.getValue();
+    this.box = new Rectangle();
+    this.xValueText = new HorizontalText();
+    this.yValueText = new HorizontalText();
+    this.graphArea = graphArea;
+    this.elements = [];
+}
+
+/**
+ * gets the rentangle portion of the info box
+ * @returns {Rectangle}
+ */
+DataPointInfoBox.prototype.getBox = function(){
+    return this.box;
+}
+
+/**
+ * gets the label with the XValue of the data point
+ * @returns {HorizontalText}
+ */
+DataPointInfoBox.prototype.getXValueText = function(){
+    return this.xValueText;
+}
+
+/**
+ * gets the label with the YValue of the data point
+ * @returns {HorizontalText}
+ */
+DataPointInfoBox.prototype.getYValueText = function(){
+    return this.yValueText;
+}
+
+/**
+ * sets up the box visual for the info box
+ * @returns {undefined}
+ */
+DataPointInfoBox.prototype.setBox = function(){
+    this.box.setPosition(this.position);
+    this.box.setLineColor(this.lineColor);
+    this.box.setFillColor(this.fillColor);
+    this.box.setLineWidth(this.lineWidth);
+    this.elements.push(this.box);
+}
+
+/**
+ * sets up the label that describes the Y Value of the data point
+ * @param {type} font
+ * @returns {undefined}
+ */
+DataPointInfoBox.prototype.setXValueText = function(font){
+    this.xValueText.setText(this.xValue);
+    this.xValueText.setFillColor("black");
+    this.xValueText.setFont(font);
+    this.elements.push(this.xValueText);
+}
+
+/**
+ * Sets the label that describes the Y Value of the data point
+ * @param {type} font
+ * @returns {undefined}
+ */
+DataPointInfoBox.prototype.setYValueText = function(font){
+    this.yValueText.setText(this.yValue);
+    this.yValueText.setFillColor("black");
+    this.yValueText.setFont(font);
+    this.elements.push(this.yValueText);
+}
+
+/**
+ * draws each of the visual elements that are part of the info box
+ * @param {type} g
+ * @returns {undefined}
+ */
+DataPointInfoBox.prototype.draw = function(g){
+    for(var i = 0; i &lt; this.elements.length; i++){
+        this.elements[i].draw(g);
+        this.elements[i].drawPath(g);
+    }
+}
+
+/**
+ * nothing to do for draw path like for usual graph visual elements
+ * draw path is already called in draw
+ * @param {graphics} g
+ * @returns {undefined}
+ */
+DataPointInfoBox.prototype.drawPath = function(g){
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Checkboxes.html">Checkboxes</a></li><li><a href="Controller.html">Controller</a></li><li><a href="DataManager.html">DataManager</a></li><li><a href="DataPoint.html">DataPoint</a></li><li><a href="DataPointInfoBox.html">DataPointInfoBox</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Graph.html">Graph</a></li><li><a href="GraphVisual.html">GraphVisual</a></li><li><a href="HitTestableElement.html">HitTestableElement</a></li><li><a href="HorizontalText.html">HorizontalText</a></li><li><a href="Key.html">Key</a></li><li><a href="Line.html">Line</a></li><li><a href="Pointer.html">Pointer</a></li><li><a href="PointerManager.html">PointerManager</a></li><li><a href="Rectangle.constructor.html">constructor</a></li><li><a href="Selector.html">Selector</a></li><li><a href="SelectorManager.html">SelectorManager</a></li><li><a href="Shape.html">Shape</a></li><li><a href="Slider.html">Slider</a></li><li><a href="SmithEnergyController.html">SmithEnergyController</a></li><li><a href="SmithEnergyDataManager.html">SmithEnergyDataManager</a></li><li><a href="SmithEnergyGameLoop.html">SmithEnergyGameLoop</a></li><li><a href="SmithEnergyGraphArea.html">SmithEnergyGraphArea</a></li><li><a href="SmithEnergySelector.html">SmithEnergySelector</a></li><li><a href="SmithEnergySelectorManager.html">SmithEnergySelectorManager</a></li><li><a href="SmithEnergySliderManager.html">SmithEnergySliderManager</a></li><li><a href="Text.html">Text</a></li><li><a href="VerticalText.html">VerticalText</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DataSeries">DataSeries</a></li><li><a href="global.html#GameLoop">GameLoop</a></li><li><a href="global.html#GraphArea">GraphArea</a></li><li><a href="global.html#Point">Point</a></li><li><a href="global.html#SliderManager">SliderManager</a></li><li><a href="global.html#SmithEnergyDataSeries">SmithEnergyDataSeries</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 18 2015 16:02:02 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

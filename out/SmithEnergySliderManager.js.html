@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SmithEnergySliderManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SmithEnergySliderManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>SmithEnergySliderManager.prototype = new SliderManager();
+SmithEnergySliderManager.constructor = SmithEnergySliderManager;
+/**
+ * Sets up Slider Control Elements and manages the values inputted into them
+ * @constructor
+ * @extends SliderManager
+ * @param {HTML div element} div
+ * @param {GraphArea} graphArea
+ * @returns {SmithEnergySliderManager}
+ */
+function SmithEnergySliderManager(div, graphArea){
+    SliderManager.call(this, div);
+    this.graphArea = graphArea;
+    this.waterMinutes;
+    this.peopleCount;
+    this.electricityMinutes;
+    this.currentEnergyType;
+    this.waterSlider;
+    this.peopleSlider;
+    this.electricitySlider;
+}
+
+/**
+ * sets up Smith Energy Consumption Data specific sliders
+ * @returns {undefined}
+ */
+SmithEnergySliderManager.prototype.initializeSliders = function(){
+    var _this = this;
+    this.peopleSlider = new SmithEnergySlider("# of People", 45, 0, 1, _this);
+    this.waterSlider = new SmithEnergySlider
+        ("Minutes Subtracted From Shower per Day",15, 0, 1, _this);
+    this.electricitySlider = new SmithEnergySlider
+    ("Extra Minutes Lights Stay Off in Dorm Room per Day", 120, 0, 1, _this);
+    this.peopleSlider.initializeSlider();
+    this.waterSlider.initializeSlider();
+    this.electricitySlider.initializeSlider();
+    this.peopleCount = this.peopleSlider.getValue();
+    this.waterMinutes = this.waterSlider.getValue();
+    this.electricityMinutes = this.electricitySlider.getValue();
+    
+}
+
+/**
+ * adds the sliders to the page
+ * @param {String} type, type of data the slider alters
+ * @returns {undefined}
+ */
+SmithEnergySliderManager.prototype.addSliders = function(type){
+    this.div.innerHTML = "";
+    if(type === "Water" || type === "Domestic Water"){
+        this.div.appendChild(this.waterSlider.getLabelDisplay());
+        this.div.appendChild(this.waterSlider.getValueDisplay());
+        this.div.appendChild(this.waterSlider.getSlider());
+        this.currentEnergyType = "water";
+    }
+    else{
+        this.div.appendChild(this.electricitySlider.getLabelDisplay());
+        this.div.appendChild(this.electricitySlider.getValueDisplay());
+        this.div.appendChild(this.electricitySlider.getSlider());
+        this.currentEnergyType = "electricity";
+    }
+    
+    this.div.appendChild(this.peopleSlider.getLabelDisplay());
+    this.div.appendChild(this.peopleSlider.getValueDisplay());
+    this.div.appendChild(this.peopleSlider.getSlider());
+
+}
+
+/**
+ * takes the value inputted in the sliders and sends to graph area to update
+ * the data point values
+ * @param {Number} value
+ * @param {String} type, type of data the slider alters
+ * @returns {undefined}
+ */
+SmithEnergySliderManager.prototype.updateGraphValues = function(value, type){
+    if(type === "# of People"){
+        this.peopleCount = value;
+    }
+    else if(type === "Minutes Subtracted From Shower per Day"){
+        this.waterMinutes = value;
+        this.currentEnergyType = "water";
+    }
+    else if(type === "Extra Minutes Lights Stay Off in Dorm Room per Day"){
+        this.electricityMinutes = value;
+        this.currentEnergyTypee = "electricity";
+    }
+    this.graphArea.updateGraphValues(this.currentEnergyType, this.waterMinutes,
+        this.peopleCount, this.electricityMinutes);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Checkboxes.html">Checkboxes</a></li><li><a href="Controller.html">Controller</a></li><li><a href="DataManager.html">DataManager</a></li><li><a href="DataPoint.html">DataPoint</a></li><li><a href="DataPointInfoBox.html">DataPointInfoBox</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Graph.html">Graph</a></li><li><a href="GraphVisual.html">GraphVisual</a></li><li><a href="HitTestableElement.html">HitTestableElement</a></li><li><a href="HorizontalText.html">HorizontalText</a></li><li><a href="Key.html">Key</a></li><li><a href="Line.html">Line</a></li><li><a href="Pointer.html">Pointer</a></li><li><a href="PointerManager.html">PointerManager</a></li><li><a href="Rectangle.constructor.html">constructor</a></li><li><a href="Selector.html">Selector</a></li><li><a href="SelectorManager.html">SelectorManager</a></li><li><a href="Shape.html">Shape</a></li><li><a href="Slider.html">Slider</a></li><li><a href="SmithEnergyController.html">SmithEnergyController</a></li><li><a href="SmithEnergyDataManager.html">SmithEnergyDataManager</a></li><li><a href="SmithEnergyGameLoop.html">SmithEnergyGameLoop</a></li><li><a href="SmithEnergyGraphArea.html">SmithEnergyGraphArea</a></li><li><a href="SmithEnergySelector.html">SmithEnergySelector</a></li><li><a href="SmithEnergySelectorManager.html">SmithEnergySelectorManager</a></li><li><a href="SmithEnergySliderManager.html">SmithEnergySliderManager</a></li><li><a href="Text.html">Text</a></li><li><a href="VerticalText.html">VerticalText</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DataSeries">DataSeries</a></li><li><a href="global.html#GameLoop">GameLoop</a></li><li><a href="global.html#GraphArea">GraphArea</a></li><li><a href="global.html#Point">Point</a></li><li><a href="global.html#SliderManager">SliderManager</a></li><li><a href="global.html#SmithEnergyDataSeries">SmithEnergyDataSeries</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 18 2015 16:02:02 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
