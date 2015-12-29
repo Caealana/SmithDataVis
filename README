@@ -1,0 +1,18 @@
+Smith Energy Consumption Data Visualization:
+Utilizes the Smith College energy consumption data from buildingOS.com
+
+Goal: Aimed towards users from the Smith College student body. To allow users to compare energy consumption between different house/dorm buildings on campus. Allow users to interact with 
+and see how small differences in lifestyle(taking a shorter shower/leaving the lights off for a little longer) impact the energy consumption
+of their house.
+
+Working Features:
+Dropdown Menu: Allows user to chose energy type to display. Available energy types are taken from the data file.
+Checkboxes: Allows users to select which dorm buildings to view energy consumption for. Users can select multiple buildings at once.
+Slider Bars: Users can adjust the number of people who undertake the change to their habits + adjust the number of minutes subtracted
+from each person's shower/number of minutes each person leaves the light off longer.
+
+Planned Features:
+Title will wrap around and won't go off screen.
+Keys will wrap around and won't go off screen.
+Axis tick markings + scale.
+Graphs will leave an imprint of their original position when altered.
